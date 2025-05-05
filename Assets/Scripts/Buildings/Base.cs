@@ -17,6 +17,11 @@ public class Base : MonoBehaviour
     public Button buyUnitButton; // ปุ่มสำหรับซื้อยูนิต
     public Button buyConstructionWorkerButton; // ปุ่มสำหรับซื้อ Construction Worker
 
+    public GameObject buildingPrefab; // ต้นแบบอาคาร
+    public GameObject buildingPreview; // ตัวอย่างอาคารก่อนวาง
+    private GameObject previewInstance;
+    private bool isPlacingBuilding = false;
+    
     private void Start()
     {
         UpdateHealthUI(); // เรียกใช้ตอนเริ่มเกมเพื่อแสดงค่า HP ตอนเริ่ม
@@ -33,6 +38,31 @@ public class Base : MonoBehaviour
         {
             // คำสั่งที่จะถูกเรียกเมื่อคลิกขวา (หรือให้สามารถคลิกปุ่มได้)
             TryRightClickToBuyUnit();
+        }
+        
+        // เช็คคลิกขวา
+        if (Input.GetMouseButtonDown(1)) // 1 คือปุ่มขวาของเมาส์
+        {
+            // คำสั่งที่จะถูกเรียกเมื่อคลิกขวา (หรือให้สามารถคลิกปุ่มได้)
+            if (isPlacingBuilding) // ถ้ากำลังวางอาคาร
+            {
+                CancelPlacingBuilding(); // ยกเลิกการวางอาคาร
+            }
+            else
+            {
+                TryRightClickToBuyUnit(); // การซื้อยูนิต (กรณีคลิกขวาบน UI)
+            }
+        }
+
+        if (isPlacingBuilding && previewInstance != null)
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            previewInstance.transform.position = mousePos;
+
+            if (Input.GetMouseButtonDown(0)) // คลิกเพื่อวางอาคาร
+            {
+                PlaceBuilding(mousePos);
+            }
         }
     }
 
@@ -105,28 +135,6 @@ public class Base : MonoBehaviour
         health = Mathf.Min(health + 20, 100);  // ซ่อมแซมให้ไม่เกิน 100
         Debug.Log(name + " กำลังซ่อมอาคาร, Health เหลือ: " + health);
     }
-
-    // ฟังก์ชันสร้าง Unit
-    /*public void SpawnUnit()
-    {
-        /*if (unitPrefab != null)
-        {
-            GameObject newUnit = Instantiate(unitPrefab, spawnPoint.position, Quaternion.identity);
-            newUnit.GetComponent<Unit>().SetTargetPosition(spawnPoint.position + new Vector3(2, 0, 0)); // ให้เดินออกมาจากฐาน
-        }#1#
-        
-        if (unitPrefab != null)
-        {
-            Vector2 spawnPosition = GetSpawnPosition();
-            if (!IsPositionOccupied(spawnPosition))
-            {
-                GameObject newUnit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
-                newUnit.GetComponent<Unit>().SetTargetPosition(spawnPosition);
-            }
-        }
-
-    }*/
-    
     public void SpawnUnit()
     {
         if (unitPrefab != null)
@@ -171,7 +179,139 @@ public class Base : MonoBehaviour
 
         return collider != null; // ถ้าพบคอลลิเดอร์ แสดงว่ามีสิ่งกีดขวาง
     }
+    
+    public void StartPlacingBuilding()
+    {
+        // ตรวจสอบว่ามีทรัพยากรพอหรือไม่สำหรับการวางอาคาร
+        if (ResourceManager.instance.SpendResources(team, (int)unitCost)) // ตรวจสอบก่อนว่ามีทรัพยากรพอไหม
+        {
+            isPlacingBuilding = true;
+            previewInstance = Instantiate(buildingPreview); // สร้างตัวอย่างของอาคาร
+        }
+        else
+        {
+            Debug.Log("เงินไม่พอสร้างอาคาร!");
+        }
+    }
 
+    /*void PlaceBuilding(Vector2 position)
+    {
+        if (CanPlaceBuilding(position)) // ตรวจสอบว่าพื้นที่ที่เลือกสามารถวางอาคารได้หรือไม่
+        {
+            isPlacingBuilding = false;
+            Destroy(previewInstance); // ลบตัวอย่างของอาคารหลังจากวาง
+
+            // ตอนนี้ถึงเวลาหักเงิน
+            if (ResourceManager.instance.SpendResources(team, (int)unitCost)) // หักเงินจริงๆ หลังจากวางอาคาร
+            {
+                GameObject newBuilding = Instantiate(buildingPrefab, position, Quaternion.identity); // สร้างอาคารจริง
+
+                // หา ConstructionWorker ที่ใกล้ที่สุดเพื่อให้มันไปสร้างอาคาร
+                ConstructionWorker worker = FindClosestWorker(position);
+                if (worker != null)
+                {
+                    worker.SetTarget(position, newBuilding); // ให้ worker ไปทำงานที่ตำแหน่ง
+                }
+            }
+            else
+            {
+                Debug.Log("ทรัพยากรไม่พอสำหรับการสร้างอาคาร");
+            }
+        }
+        else
+        {
+            Debug.Log("พื้นที่นี้ไม่สามารถสร้างอาคารได้!");
+        }
+    }*/
+    void PlaceBuilding(Vector2 position)
+    {
+        // ตรวจสอบก่อนว่าเราสามารถวางอาคารได้ในตำแหน่งนี้หรือไม่
+        if (CanPlaceBuilding(position))
+        {
+            // วางอาคารในตำแหน่งที่ต้องการ
+            Instantiate(buildingPrefab, position, Quaternion.identity);
+            Debug.Log("วางอาคารสำเร็จ");
+        }
+        else
+        {
+            Debug.Log("ไม่สามารถวางอาคารที่ตำแหน่งนี้");
+        }
+    }
 
     
+    // ฟังก์ชันยกเลิกการวางอาคาร
+    private void CancelPlacingBuilding()
+    {
+        isPlacingBuilding = false; // ตั้งค่าให้ไม่อยู่ในโหมดการวางอาคาร
+        if (previewInstance != null)
+        {
+            Destroy(previewInstance); // ลบตัวอย่างอาคารที่ยังไม่ได้วาง
+        }
+        Debug.Log("การสร้างอาคารถูกยกเลิก");
+    }
+
+    /*bool CanPlaceBuilding(Vector2 position)
+    {
+        Collider2D hit = Physics2D.OverlapCircle(position, 1f);
+        return hit == null; // ถ้าไม่มีสิ่งกีดขวาง
+    }*/
+    bool CanPlaceBuilding(Vector2 position)
+    {
+        // กำหนดขนาดวงกลมที่ใช้ตรวจสอบ
+        float radius = 1f; // เปลี่ยนขนาดให้เหมาะสมกับขนาดของอาคาร
+
+        // ตรวจสอบว่าในตำแหน่งนั้นมีการชนกับ collider หรือไม่
+        Collider2D hit = Physics2D.OverlapCircle(position, radius, LayerMask.GetMask("Ground"));
+
+        // ถ้ามีการชนกับ collider ใน Layer "Ground"
+        if (hit != null)
+        {
+            // ตรวจสอบว่า collider นี้มี Tag "Ground"
+            if (hit.CompareTag("Ground"))
+            {
+                // ตรวจสอบว่า collider นี้เป็น trigger หรือไม่
+                if (hit.isTrigger)
+                {
+                    // สามารถวางอาคารได้
+                    Debug.Log("สามารถวางอาคารได้ที่ตำแหน่งนี้");
+                    return true;
+                }
+                else
+                {
+                    // ถ้า collider ไม่ใช่ trigger
+                    Debug.Log("พื้นไม่ใช่ Trigger");
+                    return false;
+                }
+            }
+            else
+            {
+                Debug.Log("พื้นที่ไม่ใช่ Tag 'Ground'");
+                return false; // ถ้าไม่ใช่พื้นที่ที่สามารถวางได้
+            }
+        }
+        else
+        {
+            // ไม่มี collider ที่ตรงกับตำแหน่งนี้
+            Debug.Log("ไม่มีพื้นที่สามารถวางอาคารได้");
+            return false;
+        }
+    }
+
+    ConstructionWorker FindClosestWorker(Vector2 position)
+    {
+        ConstructionWorker[] workers = FindObjectsOfType<ConstructionWorker>();
+        ConstructionWorker closest = null;
+        float minDist = Mathf.Infinity;
+
+        foreach (ConstructionWorker worker in workers)
+        {
+            float dist = Vector2.Distance(worker.transform.position, position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = worker;
+            }
+        }
+        return closest;
+    }
 }

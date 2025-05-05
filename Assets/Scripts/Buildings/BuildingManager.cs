@@ -1,26 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-/*public class BuildingManager : MonoBehaviour
-{
-    public List<Building> buildings; // รายการของอาคารทั้งหมดในเกม
-
-    // ฟังก์ชันสำหรับการสร้างอาคารใหม่
-    public void ConstructBuilding(int team, GameObject buildingPrefab, Vector2 position)
-    {
-        GameObject newBuilding = Instantiate(buildingPrefab, position, Quaternion.identity); // สร้างอาคารใหม่จาก Prefab ที่ระบุและกำหนดตำแหน่ง
-        Building building = newBuilding.GetComponent<Building>(); // ดึงคอมโพเนนต์ Building จากอ็อบเจ็กต์ใหม่
-        building.team = team; // กำหนดทีมให้กับอาคาร (ทีม 0 สำหรับผู้เล่น A, ทีม 1 สำหรับผู้เล่น B)
-        buildings.Add(building); // เพิ่มอาคารที่สร้างขึ้นในรายการของอาคารทั้งหมด
-    }
-}*/
-
-
 public class BuildingManager : MonoBehaviour
 {
     public List<Building> buildings = new List<Building>(); // เก็บอาคารที่ถูกสร้างขึ้นมาแล้ว
     public GameObject objBuilding; // Prefab อาคารที่จะใช้ในการสร้าง
 
+    
+    /*public bool CanPlaceBuilding(Vector2 position)
+    {
+        Collider2D hit = Physics2D.OverlapCircle(position, 1f); // ตรวจสอบพื้นที่รัศมี 1 หน่วย
+        return hit == null; // ถ้าไม่มี Collider อยู่แสดงว่าวางได้
+    }*/
     public void ConstructBuilding(int team, Vector2 position)
     {
         if (objBuilding == null)
@@ -43,5 +34,6 @@ public class BuildingManager : MonoBehaviour
             Debug.LogError("Prefab ที่สร้างไม่มีคอมโพเนนต์ Building!");
         }
     }
+    
     
 }

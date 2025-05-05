@@ -144,10 +144,12 @@ GameObject:
   - component: {fileID: 2408260607081270131}
   - component: {fileID: 7324804365169108229}
   - component: {fileID: 348175640932633308}
+  - component: {fileID: 3835043211997099289}
   - component: {fileID: 5132404038018365736}
+  - component: {fileID: 2833948144084778529}
   m_Layer: 12
-  m_Name: ConstructionWorker TeamA
-  m_TagString: Unit
+  m_Name: ConstructionWorkerB
+  m_TagString: ConstructionWorker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,7 +216,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.074441195, a: 1}
+  m_Color: {r: 0.09524384, g: 0.3433962, b: 0.113733634, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -270,6 +272,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3835043211997099289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6602470269933534654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4132807330
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &5132404038018365736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,9 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4ab641aba9e994fa4794143d1320cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 0
+  team: 1
   moveSpeed: 5
-  buildingPrefab: {fileID: 4199937178144976472, guid: e5f4c81096722f24685526b0b928eaa0, type: 3}
+  buildingPrefab: {fileID: 4199937178144976472, guid: c0f8fefd8b7edde4e93dc2289b3ac642, type: 3}
+  buildingPreviewPrefab: {fileID: 4199937178144976472, guid: 956e49b71c6218249a83f7f6a4d5795b, type: 3}
   buildPoint: {fileID: 5309967337823596302}
   buildSpeed: 1
   chopTime: 3
@@ -292,10 +320,57 @@ MonoBehaviour:
   relocateRadius: 5
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 5760
   health: 100
   healthTextTMP: {fileID: 7101777692639952196}
   chopDamage: 10
+  speed: 2
+--- !u!114 &2833948144084778529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6602470269933534654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &6836021130717524487
 GameObject:
   m_ObjectHideFlags: 0
