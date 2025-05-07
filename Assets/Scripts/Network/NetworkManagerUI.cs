@@ -10,6 +10,9 @@ public class NetworkManagerUI : MonoBehaviour
     public GameObject teamSelectPanel;
     public Button teamAButton;
     public Button teamBButton;
+    
+    public GameObject teamAPanel;
+    public GameObject teamBPanel;
 
     public static int selectedTeam = 0; // 0 = A, 1 = B
 
@@ -22,12 +25,21 @@ public class NetworkManagerUI : MonoBehaviour
         {
             selectedTeam = 0;
             teamSelectPanel.SetActive(false);
+            teamAPanel.SetActive(true);
+            teamBPanel.SetActive(false);
         });
 
         teamBButton.onClick.AddListener(() =>
         {
             selectedTeam = 1;
             teamSelectPanel.SetActive(false);
+            teamBPanel.SetActive(true);
+            teamAPanel.SetActive(false);
         });
+    }
+    
+    public void OnExitButtonPressed()
+    { 
+        Application.Quit();
     }
 }

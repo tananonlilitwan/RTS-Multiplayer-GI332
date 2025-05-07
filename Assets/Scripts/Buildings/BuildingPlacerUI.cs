@@ -46,7 +46,8 @@ public class BuildingPlacerUI : MonoBehaviour, IBeginDragHandler, IDragHandler, 
             mousePosition.z = 0;
             
             // เรียกใช้ BuildingManager เพื่อสร้างอาคารจริง
-            buildingManager.ConstructBuilding(team, mousePosition);
+            //buildingManager.ConstructBuilding(team, mousePosition);
+            buildingManager.RequestBuild(team, mousePosition);
             
             Destroy(previewBuilding); // ลบตัวอย่างอาคารเมื่อสร้างจริงแล้ว
         }

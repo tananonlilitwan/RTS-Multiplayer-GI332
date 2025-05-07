@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitSelection : MonoBehaviour
 {
@@ -10,10 +11,16 @@ public class UnitSelection : MonoBehaviour
     private bool isSelecting;
     private List<Unit> selectedUnits = new List<Unit>(); // เก็บยูนิตที่เลือก
     private List<ConstructionWorker> selectedWorkers = new List<ConstructionWorker>(); // เก็บ ConstructionWorker ที่เลือก
+    
+    public RectTransform selectionBoxUI; // อ้างถึง Image (RectTransform)
+    private Vector2 startMousePos;
+   
+   
 
     private void Start()
     {
         mainCamera = Camera.main;
+        selectionBoxUI.gameObject.SetActive(false); // ปิดตอนเริ่ม
     }
 
     private void Update()
@@ -24,23 +31,34 @@ public class UnitSelection : MonoBehaviour
 
     private void HandleSelection()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return; // ถ้าเมาส์อยู่บน UI, ข้ามไปเลย
+        
         if (Input.GetMouseButtonDown(0)) // คลิกซ้ายเริ่มเลือก
         {
             mouseStartPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mouseStartPos.z = 0; // ให้ Z เป็น 0
+            
+            startMousePos = Input.mousePosition; // ตำแหน่งเมาส์ใน screen space
+            
             isSelecting = true;
             selectedUnits.Clear(); // ล้างยูนิตที่เลือกเมื่อเริ่มเลือกใหม่
             selectedWorkers.Clear(); // ล้าง ConstructionWorker ที่เลือก
+            selectionBoxUI.gameObject.SetActive(true);
         }
 
         if (Input.GetMouseButton(0)) // ขณะลากเมาส์
         {
             mouseEndPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mouseEndPos.z = 0; // ให้ Z เป็น 0
+            
+            Vector2 currentMousePos = Input.mousePosition;
+            UpdateSelectionBox(startMousePos, currentMousePos);
         }
 
         if (Input.GetMouseButtonUp(0)) // คลิกซ้ายปล่อย
         {
+            selectionBoxUI.gameObject.SetActive(false);
             SelectUnits();
             isSelecting = false;
         }
@@ -110,9 +128,29 @@ public class UnitSelection : MonoBehaviour
             Gizmos.DrawLine(bottomLeft, topLeft);
         }
     }
+    
+    private void UpdateSelectionBox(Vector2 screenStart, Vector2 screenEnd)
+    {
+        Vector2 startLocalPos;
+        Vector2 endLocalPos;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            selectionBoxUI.parent as RectTransform,
+            screenStart,
+            null, // ถ้า Canvas เป็น Overlay ให้ใช้ null, ถ้าเป็น Camera ให้ใส่ mainCamera
+            out startLocalPos
+        );
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            selectionBoxUI.parent as RectTransform,
+            screenEnd,
+            null,
+            out endLocalPos
+        );
+
+        Vector2 size = endLocalPos - startLocalPos;
+        selectionBoxUI.anchoredPosition = startLocalPos + size / 2;
+        selectionBoxUI.sizeDelta = new Vector2(Mathf.Abs(size.x), Mathf.Abs(size.y));
+    }
+
 }
-
-//==========^^Solo=============================================================================================
-
-//=================== Muiti===============================================
-
