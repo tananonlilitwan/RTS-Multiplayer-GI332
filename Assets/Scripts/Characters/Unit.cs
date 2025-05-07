@@ -370,7 +370,7 @@ public class Unit : NetworkBehaviour
 
         if (rb != null)
         {
-            rb.velocity = direction * 10f;
+            rb.linearVelocity = direction * 10f;
         }
 
         NetworkObject bulletNetObj = bullet.GetComponent<NetworkObject>();
