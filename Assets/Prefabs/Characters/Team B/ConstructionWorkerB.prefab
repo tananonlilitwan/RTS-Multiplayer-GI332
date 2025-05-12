@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 762727036139837078}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 0, z: 0}
+  m_LocalPosition: {x: 6.07, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59,7 +59,7 @@ RectTransform:
   m_GameObject: {fileID: 3410960017900965450}
   m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0011200929, y: 0.0017390916, z: 0.0029476131}
+  m_LocalScale: {x: 0.012573894, y: 0.017430915, z: 0.029543925}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1056048591366003561}
@@ -67,7 +67,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.01, y: -0.25}
+  m_AnchoredPosition: {x: 0.01, y: -4.58}
   m_SizeDelta: {x: 914.855, y: 855.7435}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2238500250110977000
@@ -164,7 +164,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
   m_LocalPosition: {x: -19.97, y: -7.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.17888595, y: 0.17888595, z: 0.17888595}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5309967337823596302}
@@ -215,8 +215,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.09524384, g: 0.3433962, b: 0.113733634, a: 1}
+  m_Sprite: {fileID: 1329545877889045468, guid: 0ade9569ff76b02438addf890314bf50, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -260,17 +260,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.086359024, y: -0.017270088}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 11.53, y: 9.56}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 9.049189, y: 9.671036}
   m_EdgeRadius: 0
 --- !u!114 &3835043211997099289
 MonoBehaviour:
@@ -309,10 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4ab641aba9e994fa4794143d1320cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   team: 1
   moveSpeed: 5
   buildingPrefab: {fileID: 4199937178144976472, guid: c0f8fefd8b7edde4e93dc2289b3ac642, type: 3}
-  buildingPreviewPrefab: {fileID: 4199937178144976472, guid: 956e49b71c6218249a83f7f6a4d5795b, type: 3}
   buildPoint: {fileID: 5309967337823596302}
   buildSpeed: 1
   chopTime: 3
@@ -321,10 +321,10 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 5760
-  health: 100
+  health:
+    m_InternalValue: 100
   healthTextTMP: {fileID: 7101777692639952196}
   chopDamage: 10
-  speed: 2
 --- !u!114 &2833948144084778529
 MonoBehaviour:
   m_ObjectHideFlags: 0
