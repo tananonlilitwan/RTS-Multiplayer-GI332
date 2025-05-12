@@ -27,38 +27,63 @@ public class UnitSelection : MonoBehaviour
     {
         HandleSelection();
         HandleRightClickMove();
+        
+        // ป้องกัน UI ค้างถ้าปล่อยเมาส์แต่ isSelecting ยังเป็น true
+        if (!Input.GetMouseButton(0) && isSelecting)
+        {
+            Debug.Log("Force clear UI - fallback");
+            isSelecting = false;
+            selectionBoxUI.gameObject.SetActive(false);
+            selectionBoxUI.sizeDelta = Vector2.zero;
+            selectionBoxUI.anchoredPosition = Vector2.zero;
+        }
     }
 
     private void HandleSelection()
     {
         if (EventSystem.current.IsPointerOverGameObject())
-            return; // ถ้าเมาส์อยู่บน UI, ข้ามไปเลย
-        
-        if (Input.GetMouseButtonDown(0)) // คลิกซ้ายเริ่มเลือก
         {
+            //Debug.Log("เมาส์อยู่บน UI, ข้าม HandleSelection");
+            return;
+        }
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Mouse Down");
+
             mouseStartPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            mouseStartPos.z = 0; // ให้ Z เป็น 0
-            
-            startMousePos = Input.mousePosition; // ตำแหน่งเมาส์ใน screen space
-            
+            mouseStartPos.z = 0;
+            startMousePos = Input.mousePosition;
+
             isSelecting = true;
-            selectedUnits.Clear(); // ล้างยูนิตที่เลือกเมื่อเริ่มเลือกใหม่
-            selectedWorkers.Clear(); // ล้าง ConstructionWorker ที่เลือก
+            selectedUnits.Clear();
+            selectedWorkers.Clear();
             selectionBoxUI.gameObject.SetActive(true);
         }
 
-        if (Input.GetMouseButton(0)) // ขณะลากเมาส์
+        if (Input.GetMouseButton(0))
         {
             mouseEndPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            mouseEndPos.z = 0; // ให้ Z เป็น 0
-            
+            mouseEndPos.z = 0;
+
             Vector2 currentMousePos = Input.mousePosition;
             UpdateSelectionBox(startMousePos, currentMousePos);
         }
 
-        if (Input.GetMouseButtonUp(0)) // คลิกซ้ายปล่อย
+        if (Input.GetMouseButtonUp(0))
         {
+            Debug.Log("Mouse Up");
+
+            mouseEndPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            mouseEndPos.z = 0;
+
+            UpdateSelectionBox(startMousePos, Input.mousePosition);
+            Canvas.ForceUpdateCanvases();
+
+            selectionBoxUI.sizeDelta = Vector2.zero;
+            selectionBoxUI.anchoredPosition = Vector2.zero;
             selectionBoxUI.gameObject.SetActive(false);
+
             SelectUnits();
             isSelecting = false;
         }
@@ -112,23 +137,6 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (isSelecting)
-        {
-            Vector3 topLeft = new Vector3(Mathf.Min(mouseStartPos.x, mouseEndPos.x), Mathf.Max(mouseStartPos.y, mouseEndPos.y), 0);
-            Vector3 topRight = new Vector3(Mathf.Max(mouseStartPos.x, mouseEndPos.x), Mathf.Max(mouseStartPos.y, mouseEndPos.y), 0);
-            Vector3 bottomLeft = new Vector3(Mathf.Min(mouseStartPos.x, mouseEndPos.x), Mathf.Min(mouseStartPos.y, mouseEndPos.y), 0);
-            Vector3 bottomRight = new Vector3(Mathf.Max(mouseStartPos.x, mouseEndPos.x), Mathf.Min(mouseStartPos.y, mouseEndPos.y), 0);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(topLeft, topRight);
-            Gizmos.DrawLine(topRight, bottomRight);
-            Gizmos.DrawLine(bottomRight, bottomLeft);
-            Gizmos.DrawLine(bottomLeft, topLeft);
-        }
-    }
-    
     private void UpdateSelectionBox(Vector2 screenStart, Vector2 screenEnd)
     {
         Vector2 startLocalPos;
@@ -152,5 +160,21 @@ public class UnitSelection : MonoBehaviour
         selectionBoxUI.anchoredPosition = startLocalPos + size / 2;
         selectionBoxUI.sizeDelta = new Vector2(Mathf.Abs(size.x), Mathf.Abs(size.y));
     }
+    
+    private void OnDrawGizmos()
+    {
+        if (isSelecting)
+        {
+            Vector3 topLeft = new Vector3(Mathf.Min(mouseStartPos.x, mouseEndPos.x), Mathf.Max(mouseStartPos.y, mouseEndPos.y), 0);
+            Vector3 topRight = new Vector3(Mathf.Max(mouseStartPos.x, mouseEndPos.x), Mathf.Max(mouseStartPos.y, mouseEndPos.y), 0);
+            Vector3 bottomLeft = new Vector3(Mathf.Min(mouseStartPos.x, mouseEndPos.x), Mathf.Min(mouseStartPos.y, mouseEndPos.y), 0);
+            Vector3 bottomRight = new Vector3(Mathf.Max(mouseStartPos.x, mouseEndPos.x), Mathf.Min(mouseStartPos.y, mouseEndPos.y), 0);
 
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(topLeft, topRight);
+            Gizmos.DrawLine(topRight, bottomRight);
+            Gizmos.DrawLine(bottomRight, bottomLeft);
+            Gizmos.DrawLine(bottomLeft, topLeft);
+        }
+    }
 }

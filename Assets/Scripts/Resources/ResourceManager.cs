@@ -19,18 +19,7 @@ public class ResourceManager : MonoBehaviour
 
     private void Awake()
     {
-        /*if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject); // ป้องกัน instance ซ้ำซ้อน
-        }*/
-        
-        
         if (instance == null) instance = this;
-
     }
     
     private void Start()
@@ -39,41 +28,13 @@ public class ResourceManager : MonoBehaviour
         Debug.Log("Player B Resources: " + playerBResources);
         UpdateResourceUI(); // เรียกใช้งานตอนเริ่มเกม
     }
-
-    // ฟังก์ชันสำหรับเพิ่มทรัพยากรให้กับทีม
-    /*public void AddResources(int team, int amount)
-    {
-        if (team == 0) playerAResources += amount;
-        else if (team == 1) playerBResources += amount;
-        
-        UpdateResourceUI(); // อัปเดต UI เมื่อมีการเพิ่มทรัพยากร
-    }*/
+    
     // ฟังก์ชันเพิ่มทรัพยากรให้กับผู้เล่น A
     public void AddResources(int amount)
     {
         playerAResources += amount;  // เพิ่มทรัพยากร
         UpdateResourceUI();  // อัพเดต UI
     }
-
-
-
-    // ฟังก์ชันสำหรับใช้ทรัพยากร
-    /*public bool SpendResources(int team, int amount)
-    {
-        if (team == 0 && playerAResources >= amount)
-        {
-            playerAResources -= amount;
-            UpdateResourceUI(); // อัปเดต UI เมื่อใช้ทรัพยากร
-            return true;
-        }
-        else if (team == 1 && playerBResources >= amount)
-        {
-            playerBResources -= amount;
-            UpdateResourceUI(); // อัปเดต UI เมื่อใช้ทรัพยากร
-            return true;
-        }
-        return false;
-    }*/
     
     public bool SpendResources(int team, int amount)
     {
@@ -97,25 +58,13 @@ public class ResourceManager : MonoBehaviour
         Debug.Log("ใช้ทรัพยากรไม่สำเร็จ");
         return false;
     }
-
-
-
-
-    // ฟังก์ชันอัปเดต UI
-    /*private void UpdateResourceUI()
-    {
-        if (playerAResourceText != null)
-            playerAResourceText.text = "Player A Resources: " + playerAResources;
-
-        if (playerBResourceText != null)
-            playerBResourceText.text = "Player B Resources: " + playerBResources;
-    }*/
+    
     // ฟังก์ชันอัพเดต UI การแสดงทรัพยากร
     private void UpdateResourceUI()
     {
         if (playerAResourceText != null)
         {
-            playerAResourceText.text = "Resources: " + playerAResources.ToString();  // แสดงจำนวนทรัพยากร
+            playerAResourceText.text = "Player A Resources: " + playerAResources.ToString();  // แสดงจำนวนทรัพยากร
         }
         
         if (playerBResourceText != null)
@@ -129,7 +78,4 @@ public class ResourceManager : MonoBehaviour
         AddResources(woodAmount);  // เพิ่มไม้เข้ากับทรัพยากรของผู้เล่น A
         Debug.Log("ตัดต้นไม้สำเร็จ ได้ไม้: " + woodAmount);
     }
-
-   
-
 }

@@ -152,7 +152,8 @@ public class ConstructionWorker : NetworkBehaviour
 
         if (building != null)
         {
-            building.Repair();
+            //building.Repair();
+            building.RepairServerRpc();
         }
         else if (baseUnit != null)
         {

@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
@@ -7,10 +8,20 @@ public class GameManager : NetworkBehaviour
 
     public GameObject winPanel;
     public GameObject losePanel;
+    
+    
 
     private void Awake()
     {
         Instance = this;
+        
+        GameObject resetObj = GameObject.FindWithTag("ResetButton");
+        if (resetObj != null)
+        {
+            var btn = resetObj.GetComponent<UnityEngine.UI.Button>();
+            if (btn != null)
+                btn.onClick.AddListener(OnResetButtonClicked);
+        }
     }
 
     [ClientRpc]
@@ -48,5 +59,30 @@ public class GameManager : NetworkBehaviour
         };
 
         ShowWinPanelClientRpc(targetClient);
+    }
+    
+    public void OnResetButtonClicked()
+    {
+        if (IsServer)
+        {
+            ReloadSceneClientRpc();
+        }
+        else
+        {
+            RequestResetServerRpc();
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestResetServerRpc()
+    {
+        ReloadSceneClientRpc();
+    }
+
+    [ClientRpc]
+    public void ReloadSceneClientRpc()
+    {
+        // เปลี่ยนเป็นชื่อ Scene ของคุณ เช่น "MainScene"
+        SceneManager.LoadScene("RTS Multiplayer");
     }
 }

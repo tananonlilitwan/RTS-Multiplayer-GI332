@@ -16,4 +16,5 @@ public class CameraController : MonoBehaviour
         // เคลื่อนที่กล้อง
         transform.Translate(movement);
     }
+    
 }

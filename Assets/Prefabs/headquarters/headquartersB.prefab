@@ -249,8 +249,8 @@ GameObject:
   - component: {fileID: 439868945628551386}
   - component: {fileID: 2629236631642993216}
   - component: {fileID: 1161015267293751146}
-  - component: {fileID: 4179558416448268110}
   - component: {fileID: -1769291257167622862}
+  - component: {fileID: 4179558416448268110}
   - component: {fileID: -972039017032926659}
   m_Layer: 0
   m_Name: headquartersB
@@ -377,29 +377,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4179558416448268110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7160594508301012737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36fc0afcfd1e1b746afb263abb5406e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 1
-  health: 1000
-  healthTextTMP: {fileID: 265905772330508751}
-  unitPrefab: {fileID: 5082654450842042371, guid: 77e4b9c23a2eda841a66736ec4ef3e14, type: 3}
-  constructionWorkerPrefab: {fileID: 6602470269933534654, guid: 23388547eca64ec42addf42640fefafb, type: 3}
-  spawnPoint: {fileID: 4123477789287900610}
-  unitCost: 50
-  buyUnitButton: {fileID: 0}
-  buyConstructionWorkerButton: {fileID: 0}
-  buildingPrefab: {fileID: 4199937178144976472, guid: c0f8fefd8b7edde4e93dc2289b3ac642, type: 3}
-  buildingPreview: {fileID: 4199937178144976472, guid: 956e49b71c6218249a83f7f6a4d5795b, type: 3}
 --- !u!114 &-1769291257167622862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +402,31 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &4179558416448268110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160594508301012737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36fc0afcfd1e1b746afb263abb5406e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  team: 1
+  health:
+    m_InternalValue: 1000
+  healthTextTMP: {fileID: 265905772330508751}
+  unitPrefab: {fileID: 5082654450842042371, guid: 77e4b9c23a2eda841a66736ec4ef3e14, type: 3}
+  constructionWorkerPrefab: {fileID: 6602470269933534654, guid: 23388547eca64ec42addf42640fefafb, type: 3}
+  spawnPoint: {fileID: 4123477789287900610}
+  unitCost: 50
+  buyUnitButton: {fileID: 0}
+  buyConstructionWorkerButton: {fileID: 0}
+  buildingPrefab: {fileID: 4199937178144976472, guid: c0f8fefd8b7edde4e93dc2289b3ac642, type: 3}
+  buildingPreview: {fileID: 4199937178144976472, guid: 956e49b71c6218249a83f7f6a4d5795b, type: 3}
 --- !u!114 &-972039017032926659
 MonoBehaviour:
   m_ObjectHideFlags: 0

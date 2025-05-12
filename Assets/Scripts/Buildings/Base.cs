@@ -25,6 +25,12 @@ public class Base : NetworkBehaviour
 
     private void Start()
     {
+        if (IsOwner) // ทำเฉพาะฝั่งเจ้าของ client
+        {
+            int myTeam = NetworkManagerUI.selectedTeam;
+            RTSGameManager.Instance.MoveCameraToSpawn(myTeam);
+        }
+        
         UpdateHealthUI();
 
         buyUnitButton.onClick.AddListener(OnBuyUnitButtonClicked);
@@ -65,6 +71,7 @@ public class Base : NetworkBehaviour
             {
                 PlaceBuilding(mousePos);
             }
+
         }
     }
 
@@ -184,13 +191,15 @@ public class Base : NetworkBehaviour
             Debug.Log("เงินไม่พอสร้างอาคาร!");
         }
     }
+    
 
     void PlaceBuilding(Vector2 position)
     {
         if (CanPlaceBuilding(position))
         {
-            Instantiate(buildingPrefab, position, Quaternion.identity).GetComponent<NetworkObject>()?.Spawn();
-            Debug.Log("วางอาคารสำเร็จ");
+            // บอก Server ให้สร้างให้เรา
+            BuildingManager.Instance.RequestBuild(team, position);
+            Debug.Log("ขอ Server วางอาคารแล้ว");
         }
         else
         {
@@ -246,6 +255,23 @@ public class Base : NetworkBehaviour
         if (!IsServer) return;
 
         TakeDamageServerRpc(damage);
+    }
+    
+
+    private void CheckWinCondition()
+    {
+        if (!IsServer) return;
+
+        if (team == 0)
+        {
+            GameManager.Instance.TriggerWinPanelForClient(1); // Team B ชนะ
+            GameManager.Instance.TriggerLosePanelForClient(0); // Team A แพ้
+        }
+        else if (team == 1)
+        {
+            GameManager.Instance.TriggerWinPanelForClient(0); // Team A ชนะ
+            GameManager.Instance.TriggerLosePanelForClient(1); // Team B แพ้
+        }
     }
 
 }

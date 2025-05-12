@@ -12,6 +12,7 @@ TagManager:
   - EnemyBuilding
   - Tree
   - ConstructionWorker
+  - ResetButton
   layers:
   - Default
   - TransparentFX

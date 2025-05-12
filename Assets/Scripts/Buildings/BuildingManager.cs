@@ -1,45 +1,3 @@
-/*
-using UnityEngine;
-using System.Collections.Generic;
-
-public class BuildingManager : MonoBehaviour
-{
-    public List<Building> buildings = new List<Building>(); // เก็บอาคารที่ถูกสร้างขึ้นมาแล้ว
-    public GameObject objBuilding; // Prefab อาคารที่จะใช้ในการสร้าง
-
-
-    /*public bool CanPlaceBuilding(Vector2 position)
-    {
-        Collider2D hit = Physics2D.OverlapCircle(position, 1f); // ตรวจสอบพื้นที่รัศมี 1 หน่วย
-        return hit == null; // ถ้าไม่มี Collider อยู่แสดงว่าวางได้
-    }#1#
-    public void ConstructBuilding(int team, Vector2 position)
-    {
-        if (objBuilding == null)
-        {
-            Debug.LogWarning("ไม่มี Prefab อาคารที่ต้องสร้าง!");
-            return;
-        }
-
-        // สร้างอาคารใหม่จาก Prefab
-        GameObject newBuilding = Instantiate(objBuilding, position, Quaternion.identity);
-        Building building = newBuilding.GetComponent<Building>();
-
-        if (building != null)
-        {
-            building.team = team; // ตั้งค่าทีมของอาคาร
-            buildings.Add(building); // เพิ่มอาคารลงใน List ของอาคารที่สร้างแล้ว
-        }
-        else
-        {
-            Debug.LogError("Prefab ที่สร้างไม่มีคอมโพเนนต์ Building!");
-        }
-    }
-
-
-}
-*/
-
 using Unity.Netcode;
 using UnityEngine;
 using System.Collections.Generic;
@@ -47,25 +5,57 @@ using System.Collections.Generic;
 public class BuildingManager : NetworkBehaviour
 {
     public GameObject objBuilding;
+    
+    public GameObject teamABuildingPrefab;
+    public GameObject teamBBuildingPrefab;
+    
     public List<Building> buildings = new List<Building>();
+    public static BuildingManager Instance;
 
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+    
     public void RequestBuild(int team, Vector2 position)
     {
+        // เรียกฝั่ง Server สร้าง Building
+        Debug.Log($"[Client] RequestBuild จากทีม {team}, Pos: {position}");
+
+        var netObj = GetComponent<NetworkObject>();
+        Debug.Log($"[Client] BuildingManager NetworkObject? {(netObj != null)}, Spawned: {netObj?.IsSpawned}");
+
         ConstructBuildingServerRpc(team, position);
     }
-
-    [ServerRpc]
-    private void ConstructBuildingServerRpc(int team, Vector2 position)
+    
+    [ServerRpc(RequireOwnership = false)]
+    private void ConstructBuildingServerRpc(int team, Vector2 position, ServerRpcParams rpcParams = default)//private void ConstructBuildingServerRpc(int team, Vector2 position)
     {
-        GameObject newBuilding = Instantiate(objBuilding, position, Quaternion.identity);
-        newBuilding.GetComponent<NetworkObject>().Spawn();
+        Debug.Log($"[ServerRpc] สร้าง Building ทีม {team} ที่ {position}");
+        Debug.Log($"[ServerRpc] Client {rpcParams.Receive.SenderClientId} ขอสร้าง Building ของทีม {team} ที่ {position}");
 
-        Building building = newBuilding.GetComponent<Building>();
-        if (building != null)
+        GameObject prefabToUse = team == 0 ? teamABuildingPrefab : teamBBuildingPrefab;
+        if (prefabToUse == null)
         {
-            building.team = team;
-            buildings.Add(building);
+            Debug.LogError("Prefab ของทีมยังไม่ถูกตั้งค่า!");
+            return;
+        }
+
+        GameObject newBuilding = Instantiate(prefabToUse, position, Quaternion.identity);
+        Debug.Log($"สร้างแล้ว: {newBuilding.name}, มี NetworkObject? {newBuilding.GetComponent<NetworkObject>() != null}");
+
+        NetworkObject netObj = newBuilding.GetComponent<NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.Spawn();
+            Debug.Log($"Spawn สำเร็จ: {newBuilding.name}");
+        }
+        else
+        {
+            Debug.LogError("Prefab นี้ไม่มี NetworkObject!!!");
         }
     }
 }
-
