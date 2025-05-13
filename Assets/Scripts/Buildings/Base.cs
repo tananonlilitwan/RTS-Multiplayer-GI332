@@ -192,7 +192,6 @@ public class Base : NetworkBehaviour
         }
     }
     
-
     void PlaceBuilding(Vector2 position)
     {
         if (CanPlaceBuilding(position))
@@ -257,10 +256,12 @@ public class Base : NetworkBehaviour
         TakeDamageServerRpc(damage);
     }
     
-
     private void CheckWinCondition()
     {
-        if (!IsServer) return;
+        if (!IsServer)
+        { 
+            return;
+        }
 
         if (team == 0)
         {

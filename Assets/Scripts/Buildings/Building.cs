@@ -5,7 +5,6 @@ using Unity.Netcode;
 public class Building : NetworkBehaviour
 {
     public int team; // 0 = Team A, 1 = Team B
-
     public NetworkVariable<int> health = new NetworkVariable<int>(1000);
     public TextMeshProUGUI healthTextTMP;
 

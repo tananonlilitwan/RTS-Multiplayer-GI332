@@ -164,7 +164,7 @@ RectTransform:
   m_GameObject: {fileID: 4361633024842359021}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0014582123, y: 0.00078341406, z: 0.003837401}
+  m_LocalScale: {x: 0.0061826897, y: 0.0075732605, z: 0.016270237}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4331870866404148803}
@@ -172,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.36, y: 0.457}
+  m_AnchoredPosition: {x: 0.65, y: 5.69}
   m_SizeDelta: {x: 2341.497, y: 751.41956}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6664437670486836650
@@ -268,8 +268,8 @@ Transform:
   m_GameObject: {fileID: 7160594508301012737}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.64, y: 0.10633, z: 0}
-  m_LocalScale: {x: 2.1314, y: 6.1597466, z: 2.1314}
+  m_LocalPosition: {x: 9.65, y: 1.1056, z: 0}
+  m_LocalScale: {x: 0.52727103, y: 0.5403241, z: 0.45087972}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3628324865694235119}
@@ -320,8 +320,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.46510902, b: 0.12641507, a: 1}
+  m_Sprite: {fileID: 8648496013100521316, guid: 09ac2239e1042a94182929a26f6f40a1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -365,17 +365,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.07580757, y: -0.0739758}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 10.485001, y: 11.45}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 11.258989, y: 12.885162}
   m_EdgeRadius: 0
 --- !u!114 &-1769291257167622862
 MonoBehaviour:
@@ -389,14 +389,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4178846120
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 2178844773
+  InScenePlacedSourceGlobalObjectIdHash: 4178846120
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
+  SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
@@ -425,7 +425,7 @@ MonoBehaviour:
   unitCost: 50
   buyUnitButton: {fileID: 0}
   buyConstructionWorkerButton: {fileID: 0}
-  buildingPrefab: {fileID: 4199937178144976472, guid: c0f8fefd8b7edde4e93dc2289b3ac642, type: 3}
+  buildingPrefab: {fileID: 4199937178144976472, guid: 7c6f7a7dd54924a449fffb4b347c8d4b, type: 3}
   buildingPreview: {fileID: 4199937178144976472, guid: 956e49b71c6218249a83f7f6a4d5795b, type: 3}
 --- !u!114 &-972039017032926659
 MonoBehaviour:
@@ -498,7 +498,7 @@ Transform:
   m_GameObject: {fileID: 8857912048784301750}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.4, y: -0.026, z: 0}
+  m_LocalPosition: {x: -0.4, y: -10.77, z: 0}
   m_LocalScale: {x: 0.21536908, y: 0.074522175, z: 0.21536908}
   m_ConstrainProportionsScale: 0
   m_Children: []
