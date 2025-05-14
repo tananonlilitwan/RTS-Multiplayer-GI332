@@ -32,7 +32,7 @@ public class BuildingManager : NetworkBehaviour
     }
     
     [ServerRpc(RequireOwnership = false)]
-    private void ConstructBuildingServerRpc(int team, Vector2 position, ServerRpcParams rpcParams = default)//private void ConstructBuildingServerRpc(int team, Vector2 position)
+    private void ConstructBuildingServerRpc(int team, Vector2 position, ServerRpcParams rpcParams = default)
     {
         Debug.Log($"[ServerRpc] สร้าง Building ทีม {team} ที่ {position}");
         Debug.Log($"[ServerRpc] Client {rpcParams.Receive.SenderClientId} ขอสร้าง Building ของทีม {team} ที่ {position}");

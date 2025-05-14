@@ -188,7 +188,7 @@ public class Unit : NetworkBehaviour
             UpdateHealthUI();
         };
 
-        UpdateHealthUI(); // ให้แน่ใจว่า UI ถูกเซ็ตตอน Spawn
+        UpdateHealthUI();
     }
 
 
